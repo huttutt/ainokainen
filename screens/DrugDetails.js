@@ -13,15 +13,21 @@ import {
   Body,
   Right,
   Button,
-  Icon,
   Title,
   H1,
   H2,
   H3
 } from 'native-base';
 
+import { MaterialIcons } from '@expo/vector-icons';
+
+
 
 export default class DrugDetails extends React.Component {
+
+  _goBack = () => {
+    this.props.navigator.pop();
+  }
 
   componentDidMount() {
     console.log("did mount: ", this.props);
@@ -34,13 +40,16 @@ export default class DrugDetails extends React.Component {
       <Container>
        <Header>
          <Left>
+           <Button transparent onPress={() => (this._goBack())}>
+             <MaterialIcons name="arrow-back" size={32} color="#08c" />
+           </Button>
          </Left>
          <Body>
            <Title>Drugs</Title>
          </Body>
          <Right>
            <Button transparent>
-             <Icon name='add' />
+              <MaterialIcons name="edit" size={32} color="#08c" />
            </Button>
          </Right>
        </Header>
