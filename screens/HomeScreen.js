@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   feedBoxBodyText: {
-    fontSize: 23,
+    fontSize: 14,
   },
   feedBoxBodyTextLabel: {
     flex: 0.7,

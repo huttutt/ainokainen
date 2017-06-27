@@ -16,7 +16,10 @@ import {
   Title,
   H1,
   H2,
-  H3
+  H3,
+  Card,
+  CardItem,
+  Icon,
 } from 'native-base';
 
 import { MaterialIcons } from '@expo/vector-icons';
@@ -35,13 +38,12 @@ export default class DrugDetails extends React.Component {
 
   render() {
     console.log("render: ", this.props);
-    console.log("renderDrug: ", this.props.detailDrug);
     return (
       <Container>
        <Header>
          <Left>
            <Button transparent onPress={() => (this._goBack())}>
-             <MaterialIcons name="arrow-back" size={32} color="#08c" />
+             <MaterialIcons name="arrow-back" size={23} color="#08c" />
            </Button>
          </Left>
          <Body>
@@ -49,13 +51,35 @@ export default class DrugDetails extends React.Component {
          </Body>
          <Right>
            <Button transparent>
-              <MaterialIcons name="edit" size={32} color="#08c" />
+              <MaterialIcons name="edit" size={23} color="#08c" />
            </Button>
          </Right>
        </Header>
         <Content>
-          <H1>{this.props.detailDrug}</H1>
-          <Text>Default</Text>
+
+          <Card>
+            <CardItem header>
+              <Text>{this.props.drug.name}</Text>
+            </CardItem>
+            <CardItem>
+              <Body>
+                <Text>
+                  //Your text here
+                </Text>
+              </Body>
+            </CardItem>
+            <CardItem footer>
+              <Left></Left>
+              <Button transparent primary iconLeft>
+                <Icon name='add' />
+                <Text>
+                  Add Treatment
+                </Text>
+              </Button>
+              <Right></Right>
+            </CardItem>
+         </Card>
+
         </Content>
      </Container>
     );
@@ -103,5 +127,8 @@ const styles = StyleSheet.create({
     flex: 0.2,
     alignItems: 'flex-end',
     justifyContent: 'center',
+  },
+  cardFooter: {
+    alignItems: 'center',
   },
 });

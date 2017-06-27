@@ -19,19 +19,56 @@ import {
   ListItem,
 } from 'native-base';
 
-
 export default class DrugsList extends React.Component {
 
   constructor(props) {
     super(props);
 
+    var drugs = [
+      {
+        createdAt: '2017-06-01',
+        drugConcentration: 150.0,
+        drugConcentrationUnit: 'mg/capsule',
+        minHoursBetweenDoses: 12.0,
+        id: 1,
+        materialForm: 'Capsule',
+        name: 'Orfiril Long',
+      },
+      {
+        createdAt: '2017-06-01',
+        drugConcentration: 40.0,
+        drugConcentrationUnit: 'mg/ml',
+        minHoursBetweenDoses: 6.0,
+        id: 2,
+        materialForm: 'Oral solution',
+        name: 'Burana',
+      },
+      {
+        createdAt: '2017-06-01',
+        drugConcentration: 24.0,
+        drugConcentrationUnit: 'mg/ml',
+        minHoursBetweenDoses: 6.0,
+        id: 3,
+        materialForm: 'Oral solution',
+        name: 'Panadol',
+      },
+    ]
+
+    var sortedDrugs = drugs.sort((a, b) => {
+      return a['name'].localeCompare(b['name'])
+    })
+
     this.state={
-      detailDrug: "",
+      drugAlphabetizedList: sortedDrugs,
     }
   }
 
-  _handlePress = () => {
-    this.props.navigator.push('drug', {detailDrug: "Orfiril"});
+  _handlePress = (drug) => {
+    this.props.navigator.push('drug', {drug: drug});
+  }
+
+  componentWillMount() {
+
   }
 
   render() {
@@ -52,44 +89,20 @@ export default class DrugsList extends React.Component {
        <ScrollView  style={styles.container}>
 
          <List>
-            <ListItem itemDivider>
-              <Text style={styles.drugListSeparator}>B</Text>
-            </ListItem>
-            <ListItem icon>
-              <Body>
-                <Text style={styles.drugBoxHeaderText}>Burana</Text>
-                <Text style={styles.drugBoxInfoText}>Oral suspension</Text>
-              </Body>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-            <ListItem itemDivider>
-              <Text style={styles.drugListSeparator}>O</Text>
-            </ListItem>
-            <ListItem icon onPress={() => (this._handlePress())}>
-              <Body>
-                <Text style={styles.drugBoxHeaderText}>Orfiril</Text>
-                <Text style={styles.drugBoxInfoText}>150mg Capsule, Default dosage: 1 x 150mg</Text>
-              </Body>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-            <ListItem itemDivider>
-              <Text style={styles.drugListSeparator}>P</Text>
-            </ListItem>
-            <ListItem icon>
-              <Body>
-                <Text style={styles.drugBoxHeaderText}>Panadol</Text>
-                <Text style={styles.drugBoxInfoText}>Oral suspension</Text>
-              </Body>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-          </List>
-
+          {
+            this.state.drugAlphabetizedList.map((drug, i) => (
+              <ListItem key={i} onPress={() => this._handlePress(drug)}>
+                <Body>
+                  <Text style={styles.drugBoxHeaderText}>{drug.name}</Text>
+                  <Text style={styles.drugBoxInfoText}>{drug.drugConcentration} {drug.drugConcentrationUnit}, {drug.materialForm}</Text>
+                </Body>
+                <Right>
+                  <Icon name="arrow-forward" />
+                </Right>
+              </ListItem>
+            ))
+          }
+         </List>
 
        </ScrollView>
      </Container>
@@ -120,9 +133,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     flexDirection: 'row',
-  },
-  drugListSeparator: {
-    fontWeight: 'bold',
   },
   drugBoxHeaderText: {
     fontSize: 14,
